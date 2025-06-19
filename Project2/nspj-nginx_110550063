@@ -1,0 +1,32 @@
+# Last Modified: Sat Apr 27 15:50:05 2024
+abi <abi/3.0>,
+
+include <tunables/global>
+
+/usr/sbin/nginx {
+  include <abstractions/apache2-common>
+  include <abstractions/base>
+  include <abstractions/dovecot-common>
+  include <abstractions/evince>
+  include <abstractions/openssl>
+  include <abstractions/web-data>
+
+  capability dac_override,
+  capability setgid,
+  capability setuid,
+
+  /var/www/html/safe/* r,
+  deny /var/www/html/unsafe/* r,
+  /usr/sbin/nginx mr,
+  /var/log/nginx/access.log w,
+  /var/log/nginx/error.log w,
+  owner /etc/group r,
+  owner /etc/nginx/conf.d/ r,
+  owner /etc/nginx/mime.types r,
+  owner /etc/nginx/modules-enabled/ r,
+  owner /etc/nginx/nginx.conf r,
+  owner /etc/nsswitch.conf r,
+  owner /etc/passwd r,
+  owner /run/nginx.pid rw,
+
+}
